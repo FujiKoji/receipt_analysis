@@ -1,0 +1,175 @@
+<html>
+<head>
+    <title>template test</title>
+</head>
+<body>
+    <h1>検証</h1>    
+    <p>2) 指定した期間内のデータを対象に診療識別単位で集計したデータをCSVで出力する。</p>
+    <form action="{% url 'todo:csvexport_summary' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start">
+        <input type="integer" name="end">
+        <button type="submit">csv出力</button>
+    </form>
+    <p>3) 指定した期間内のデータを対象に歯科診療行為単位で集計したデータをCSVで出力する。</p>
+    <form action="{% url 'todo:csvexport_practice' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start">
+        <input type="integer" name="end">
+        <button type="submit">csv出力</button>
+    </form>
+    <p>6) 月次の予防・治療の割合や離脱率の可視化</p>
+    <form action="{% url 'todo:analysis_monthly_data' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <p>7) 患者の診療情報を診療識別で分けてエクスポート</p>
+    <form action="{% url 'todo:export_patient_data' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="date" name="start">
+        <input type="date" name="end">
+        <button type="submit">CSV出力</button>
+    </form>
+    <p>8) 診療グループをエクスポート</p>
+    <form action="{% url 'todo:export_patient_data_set' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="date" name="start">
+        <input type="date" name="end">
+        <button type="submit">CSV出力</button>
+    </form>
+    <p>9) 予防群をエクスポート</p>
+    <form action="{% url 'todo:export_prevent_set' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit">CSV出力</button>
+    </form>
+    <p>11) 月次の予防・治療の割合を点数で可視化</p>
+    <form action="{% url 'todo:analysis_monthly_data_score' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <p>12) 月次のステージ管理</p>
+    <form action="{% url 'todo:analysis_monthly_patient_stage' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <p>14) 担当者評価</p>
+    <form action="{% url 'todo:analysis_assess_responsible' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="month" placeholder="202201">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <p>15) 担当者評価_v2</p>
+    <form action="{% url 'todo:assess_dh' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="month" placeholder="202201">
+        <input type="string" name="name" placeholder="Aさん">
+        <input type="file" name="csv">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <p>16) キャンセルデータの取り込み（Apodent）</p>
+    <form action="{% url 'todo:import_cancel_csv' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv">
+        <button type="submit">送信</button>
+    </form>
+    <p>17) 月次のステージ管理_訪問あり</p>
+    <form action="{% url 'todo:analysis_monthly_patient_v2' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <p>テスト用</p>
+    <a href="{% url 'todo:test' %}" class="btn btn-primary">test</a>
+
+    <h1>新しい医院のレセプト入手時に最初に出すデータ</h1>
+    <h2>1) UKEファイルを取り込みデータベースに登録する</h2>
+    <form action="{% url 'todo:upload' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv">
+        <button type="submit">送信</button>
+    </form>
+    <h2>2) 予防区分したファイル入れてデータベースに入れる</h2>
+    <a href="{% url 'todo:yobou' %}" class="btn btn-primary">予防データベースを登録</a>
+    <h2>3) UKEファイルの歯科診療行為レコード（医薬品、特定機材も含む）を用いて加工したデータをデータベースに登録</p>
+    <a href="{% url 'todo:transform_practice_data' %}" class="btn btn-primary">transform_practice_data</a>
+    <h2>4) 予防区分を0,1,2にわける</h2>
+    <a href="{% url 'todo:transform_yobou' %}" class="btn btn-primary">transform_yobou</a>
+    <h2>5)ステージ管理</h2>
+    <form action="{% url 'todo:analysis_monthly_patient_stage' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <h2>6)点数</h2>
+    <p>※データが無い範囲を含めるとエラーになるので注意</p>
+    <form action="{% url 'todo:monthly_score' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <h2>7)保険加算シミュレーション</h2>
+    <form action="{% url 'todo:insurance_addition_simulation' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <h2>8) アポ帳のデータがある場合インポートして、診療情報レコードに担当者情報を追加する</h2>
+    <p>  【Apodentの場合】</p>
+    <p>※[カルテ番号,患者名,予約日,歯科医師,衛生士助手]をカラムに持つcsvをインポートする</p>
+    <form action="{% url 'todo:import_apodent_responsible_data' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv">
+        <button type="submit">送信</button>
+    </form>
+    <p>  【Apotoolの場合】</p>
+    <p>※[Name,date,res_1,res_2,res_3]をカラムに持つcsvをインポートする</p>
+    <p>※また医院ごとの担当者の入れ方を考慮する</p>
+    <form action="{% url 'todo:import_apotool_responsible_data' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv">
+        <button type="submit">送信</button>
+    </form>
+    <h2>9)衛生士評価</h2>
+    <form action="{% url 'todo:assess_responsible' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="str" name="name" placeholder="Aさん">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <h2>10)衛生士評価 キャンセル</h2>
+    <p>Apotoolの場合</p>
+    <form action="{% url 'todo:assess_responsible_cancel' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="string" name="name" placeholder="Aさん">
+        <input type="file" name="csv">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <h2>11)衛生士評価 予約</h2>
+    <p>Apotoolの場合</p>
+    <form action="{% url 'todo:assess_responsible_reserve' %}" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="string" name="name" placeholder="Aさん">
+        <input type="file" name="csv">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+    <h2>12)ステージ管理_v2</h2>
+    <form action="{% url 'todo:analysis_monthly_patient_stage_v2' %}" method='GET' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="integer" name="start" placeholder="202201">
+        <input type="integer" name="end" placeholder="202212">
+        <button type="submit">分析ページへ遷移</button>
+    </form>
+</body>
+</html>

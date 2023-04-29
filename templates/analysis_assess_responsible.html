@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>analysis_monthly_patient_stage</title>
+</head>
+<body>
+    <h1>DH/DA</h1>
+    <h2>来院人数</h2>
+    {{ df_dhda_count | safe }}
+    <h2>離脱人数</h2>
+    {{ df_dhda_breakaway | safe }}
+    <h2>離脱率</h2>
+    {{ df_dhda_breakaway_per | safe }}
+    <p>=====================================================</p>
+    <h1>DR</h1>
+    <h2>来院人数</h2>
+    {{ df_dr_count | safe }}
+    <h2>離脱人数</h2>
+    {{ df_dr_breakaway | safe }}
+    <h2>離脱率</h2>
+    {{ df_dr_breakaway_per | safe }}
+</body>
+</html>

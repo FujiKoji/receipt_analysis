@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>analysis_monthly_patient_stage</title>
+</head>
+<body>
+    <h1>analysis_monthly_patient_stage</h1>
+    <h2>来院人数</h2>
+    {{ all | safe }}
+    <h2>離脱人数</h2>
+    {{ break | safe }}
+    <h2>離脱率</h2>
+    {{ break_per | safe }}
+</body>
+</html>
